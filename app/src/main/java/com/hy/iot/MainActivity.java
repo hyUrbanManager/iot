@@ -1,93 +1,45 @@
 package com.hy.iot;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
-import java.io.IOException;
-
 import android.util.Log;
 
-import com.google.android.things.contrib.driver.button.Button;
-import com.google.android.things.contrib.driver.pwmservo.Servo;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.things.pio.PeripheralManager;
+
+import java.util.Arrays;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final String gpioButtonPinName = "BUS NAME";
-    private static final String PWM_BUS = "BUS NAME";
-    private Button mButton;
-    private Servo mServo;
+    private static final String TAG = "@MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupButton();
-        setupServo();
-        try {
-            mServo.setAngle(30);
-        } catch (IOException e) {
-            Log.e(TAG, "Error setting the angle", e);
-        }
+        setContentView(R.layout.activity_main);
+
+        logHardwareList();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        destroyButton();
-        destroyServo();
-    }
+    private void logHardwareList() {
+        PeripheralManager peripheralManager = PeripheralManager.getInstance();
 
-    private void setupButton() {
-        try {
-            mButton = new Button(gpioButtonPinName,
-                    // high signal indicates the button is pressed
-                    // use with a pull-down resistor
-                    Button.LogicState.PRESSED_WHEN_HIGH
-            );
-            mButton.setOnButtonEventListener(new Button.OnButtonEventListener() {
-                @Override
-                public void onButtonEvent(Button button, boolean pressed) {
-                    // do something awesome
-                }
-            });
-        } catch (IOException e) {
-            // couldn't configure the button...
-        }
-    }
+        List<String> list = peripheralManager.getGpioList();
+        Log.d(TAG, "gpio list: " + Arrays.toString(list.toArray()));
 
-    private void destroyButton() {
-        if (mButton != null) {
-            Log.i(TAG, "Closing button");
-            try {
-                mButton.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Error closing button", e);
-            } finally {
-                mButton = null;
-            }
-        }
-    }
+        list = peripheralManager.getPwmList();
+        Log.d(TAG, "pwm list: " + Arrays.toString(list.toArray()));
 
-    private void setupServo() {
-        try {
-            mServo = new Servo(PWM_BUS);
-            mServo.setAngleRange(0f, 180f);
-            mServo.setEnabled(true);
-        } catch (IOException e) {
-            Log.e(TAG, "Error creating Servo", e);
-        }
-    }
+        list = peripheralManager.getSpiBusList();
+        Log.d(TAG, "spi list: " + Arrays.toString(list.toArray()));
 
-    private void destroyServo() {
-        if (mServo != null) {
-            try {
-                mServo.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Error closing Servo");
-            } finally {
-                mServo = null;
-            }
-        }
+        list = peripheralManager.getUartDeviceList();
+        Log.d(TAG, "uart list: " + Arrays.toString(list.toArray()));
+
+        list = peripheralManager.getI2cBusList();
+        Log.d(TAG, "i2c list: " + Arrays.toString(list.toArray()));
+
     }
 }
