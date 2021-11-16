@@ -2,6 +2,7 @@ package com.hy.iot;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -66,4 +67,10 @@ public class LightActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int index = event.getKeyCode() % 5;
+        mLightController.setLight(index, event.getAction() == KeyEvent.ACTION_DOWN);
+        return super.dispatchKeyEvent(event);
+    }
 }
