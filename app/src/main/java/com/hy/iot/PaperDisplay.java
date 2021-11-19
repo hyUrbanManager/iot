@@ -5,12 +5,12 @@ package com.hy.iot;
  */
 public class PaperDisplay extends PaperIo {
 
-    private static final int DELAY_TIME = 50;
-    private static final int PIC_WHITE = 255;
-    private static final int PIC_BLACK = 254;
-    private static final int PIC_Orientation = 253;
-    private static final int PIC_LEFT_BLACK_RIGHT_WHITE = 249;
-    private static final int PIC_UP_BLACK_DOWN_WHITE = 248;
+    public static final int DELAY_TIME = 50;
+    public static final int PIC_WHITE = 255;
+    public static final int PIC_BLACK = 254;
+    public static final int PIC_Orientation = 253;
+    public static final int PIC_LEFT_BLACK_RIGHT_WHITE = 249;
+    public static final int PIC_UP_BLACK_DOWN_WHITE = 248;
 
     private byte[] DisBuffer = new byte[250 * 16];
 
@@ -21,7 +21,6 @@ public class PaperDisplay extends PaperIo {
     };
     private byte[] gImage_logo = new byte[4000];
 
-
     void MyRESET() {
         nRST_L();
         DELAY_mS(10);//1ms
@@ -31,29 +30,32 @@ public class PaperDisplay extends PaperIo {
 
     // 30us
     void DELAY_100nS(int delaytime) {
-        try {
-            Thread.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        for (int i = 0; i < 1000; i++) {
+//
+//        }
+//        try {
+//            Thread.sleep(0, delaytime);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     // 1ms
     void DELAY_mS(int delaytime) {
-        try {
-            Thread.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(delaytime);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     //  1s
     void DELAY_S(int delaytime) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     //  1M
@@ -71,6 +73,8 @@ public class PaperDisplay extends PaperIo {
 //                break;
 //        }
 //        DELAY_M(2);
+
+        DELAY_S(5);
     }
 
     void FIRST_PICTURE() {
@@ -94,7 +98,7 @@ public class PaperDisplay extends PaperIo {
         //    SPI4W_WRITEDATA((byte)0x30);    // GS0-->GS0
         //    SPI4W_WRITEDATA((byte)0x31);    // GS0-->GS1
         //    SPI4W_WRITEDATA((byte)0x32);    // GS1-->GS0
-        SPI4W_WRITEDATA((byte) 0x33);    // GS1-->GS1  ������һ��ˢ��Border�Ӱ׵���
+        SPI4W_WRITEDATA((byte) 0x33);    // GS1-->GS1
         //    SPI4W_WRITEDATA((byte)0x43);    // VBD-->VSS
         //    SPI4W_WRITEDATA((byte)0x53);    // VBD-->VSH
         //    SPI4W_WRITEDATA((byte)0x63);    // VBD-->VSL
@@ -121,7 +125,7 @@ public class PaperDisplay extends PaperIo {
         SPI4W_WRITECOM((byte) 0x21);       // Option for Display Update
         SPI4W_WRITEDATA((byte) 0x83);    // A[7]=1(Enable bypass)  A[4]=0ȫ��(value will be used as for bypass)
 
-        DIS_IMG(PIC_WHITE);         // ȫ�ڵ�ȫ�������������ɷ�ֹ�������ֻ���������
+        DIS_IMG(PIC_WHITE);         //
 
         SPI4W_WRITECOM((byte) 0x21);       //
         SPI4W_WRITEDATA((byte) 0x03);    // ����ˢ�»ָ�������ǰ��2��ͼ�Ƚ�
@@ -246,16 +250,12 @@ public class PaperDisplay extends PaperIo {
             }
             DELAY_100nS(10);
             SCLK_H();
-            ;
             DELAY_100nS(10);
             SCLK_L();
             TEMPCOM = TEMPCOM << 1;
             DELAY_100nS(10);
         }
         nCS_H();
-    }
-
-    void PaperIO_Int() {
     }
 
 }

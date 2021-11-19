@@ -2,6 +2,7 @@ package com.hy.iot;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -20,12 +21,15 @@ public class LightActivity extends AppCompatActivity {
 
     Button mButton1;
     Button mButton2;
+    Button mButton3;
 
     private LightController mLightController;
 
     private final Handler mMainHandler = new Handler();
     private Runnable mRunLightRunnable;
     private int mIndex;
+
+    private PaperDisplay mPaperDisplay = new PaperDisplay();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class LightActivity extends AppCompatActivity {
 
         mButton1 = findViewById(R.id.button);
         mButton2 = findViewById(R.id.button2);
+        mButton3 = findViewById(R.id.button3);
 
         mRunLightRunnable = new Runnable() {
             @Override
@@ -65,6 +70,24 @@ public class LightActivity extends AppCompatActivity {
                 mMainHandler.removeCallbacksAndMessages(null);
             }
         });
+
+        mButton3.setOnClickListener(v -> new Thread(() -> {
+            Log.d(TAG, "paper display.");
+            mPaperDisplay.INIT_SSD1673();
+
+            Log.d(TAG, "paper end.");
+
+//            mPaperDisplay.Init_buff();
+//            mPaperDisplay.DIS_IMG(PaperDisplay.PIC_WHITE);
+//
+//            mPaperDisplay.nRST_L();
+//            mPaperDisplay.nCS_L();
+//            mPaperDisplay.SDA_L();
+//            mPaperDisplay.SCLK_H();
+//            mPaperDisplay.nDC_L();
+
+
+        }).start());
     }
 
     @Override

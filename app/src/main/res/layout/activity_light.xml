@@ -18,5 +18,13 @@
         android:layout_centerInParent="true"
         android:text="停止流水灯" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="写屏幕" />
+
+
 </LinearLayout>
 
