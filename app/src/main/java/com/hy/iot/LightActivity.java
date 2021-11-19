@@ -9,6 +9,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hy.iot.driver.LightController;
+import com.hy.iot.driver.PaperDisplay;
+
 /**
  * @author huangye
  */

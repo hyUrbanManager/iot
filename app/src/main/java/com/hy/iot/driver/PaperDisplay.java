@@ -1,4 +1,4 @@
-package com.hy.iot;
+package com.hy.iot.driver;
 
 /**
  * @author huangye
@@ -84,7 +84,7 @@ public class PaperDisplay extends PaperIo {
         SPI4W_WRITEDATA((byte) 0xC4);
     }
 
-    void INIT_SSD1673() {
+    public void INIT_SSD1673() {
         MyRESET();
         READBUSY();
         SPI4W_WRITECOM((byte) 0x01);       // Gate Setting
