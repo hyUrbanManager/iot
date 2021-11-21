@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hy.iot.data.ISinaStock;
 import com.hy.iot.driver.LightController;
+import com.hy.iot.utils.SSLSocketClient;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 /**
@@ -48,8 +50,13 @@ public class NumberLightActivity2 extends AppCompatActivity {
 
         mLightController = new LightController(this);
 
+        OkHttpClient client = new OkHttpClient.Builder()
+                .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())
+                .hostnameVerifier(SSLSocketClient.getHostnameVerifier())
+                .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ISinaStock.BASE_URL)
+                .client(client)
                 .build();
         mSinaStock = retrofit.create(ISinaStock.class);
 
